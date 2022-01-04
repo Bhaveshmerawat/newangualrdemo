@@ -1,0 +1,64 @@
+<div class="w-100">
+  <div class="container">
+    <div class="col-md-8 m-auto">
+      <div class="card mt-4 p-4">
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>title</th>
+              <th>completed</th>
+              <th>action</th>
+            </tr>
+            <tr *ngFor="let list of todolist; let i =index;">
+              <td> {{i +1}}</td>
+              <td>{{list.title}} </td>
+              <td>{{list.status}}</td>
+              <td> <button class="edit btn btn-info me-2" [class.selected]="list === selectedList"
+                  (click)="[editOpenModal(editmodal),onSelectList(list)]">Edit</button>
+                <button class="delete btn btn-danger" [class.selected]="list === selectedList"
+                  (click)="[deleteOpenModal(delteItemModal),onSelectList(list)]">Delete</button>
+              </td>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Update modal -->
+  <ng-template #editmodal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Hi there! {{selectedList.id | json}} </h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="text" #statusInput placeholder="Enter status">
+    </div>
+    <div class="modal-footer">
+      <button type="button" (click)="[getSelectVal(statusInput.value,selectedList.id), c('Save click')]"
+        class="btn btn-outline-dark">Save</button>
+    </div>
+  </ng-template>
+  <!-- Delete modal -->
+  <ng-template #delteItemModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+    </div>
+    <div class="modal-body">
+      <p>Are you Sure to delete <strong> {{selectedList.title}} field</strong></p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="d('Cross click')">
+        Cancle
+      </button>
+      <button type="button" (click)="[deleteItem(selectedList.id), c('Save click')]"
+        class="btn btn-danger btn-outline-dark">Delete</button>
+    </div>
+  </ng-template>
+
+
+
+
+</div>
